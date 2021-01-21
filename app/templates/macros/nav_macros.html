@@ -4,12 +4,12 @@
 
 {% macro render_menu_items(endpoints) %}
     {% for endpoint, name, icon in endpoints %}
-        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+        <v-btn text class="{% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
             {% if icon %}
                 <i class="{{ icon }} icon"></i>
             {% endif %}
             {{ name | safe }}
-        </a>
+        </v-btn>
     {% endfor %}
 {% endmacro %}
 
@@ -51,7 +51,8 @@
 {% endmacro %}
 
 {% macro mobile_nav(current_user, dropdown=None) %}
-    <div class="mobile only row">
+
+    <!-- div class="mobile only row">
         <div class="ui fixed inverted black main menu">
             {{ header_items(current_user) }}
             <div class="right menu">
@@ -64,7 +65,7 @@
           {{ account_items(current_user) }}
           {{ create_dropdown(dropdown) }}
         </div>
-    </div>
+    </div-->
 {% endmacro %}
 
 {% macro create_dropdown(dropdown) %}
@@ -82,17 +83,42 @@
 {% endmacro %}
 
 {% macro desktop_nav(current_user, dropdown=None) %}
-    <div class="computer tablet only row">
-        <div class="ui fixed inverted black main menu">
-            <div class="ui container">
-                {{ header_items(current_user) }}
-                {{ create_dropdown(dropdown) }}
-                <div class="right menu">
-                    {{ account_items(current_user) }}
-                </div>
-            </div>
-        </div>
-    </div>
+
+<template>
+  <div>
+    <v-app-bar dense>
+      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Page title</v-toolbar-title>
+
+      {{ header_items(current_user) }}
+      {{ create_dropdown(dropdown) }}
+      <v-spacer></v-spacer>
+
+      <v-btn icon>
+        {{ account_items(current_user) }}
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-menu left bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
+            <v-list-item-title>Option {{ n }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+  </div>
+</template>
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}
@@ -101,3 +127,4 @@
         {{ desktop_nav(current_user, dropdown=dropdown) }}
     </nav>
 {% endmacro %}
+

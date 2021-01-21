@@ -1,13 +1,14 @@
 {% import 'macros/nav_macros.html' as nav %}
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         {% include 'partials/_head.html' %}
         {# Any templates that extend this template can set custom_head_tags to add scripts to their page #}
         {% block custom_head_tags %}{% endblock %}
     </head>
     <body>
+      <div id="app">
+      <v-app>
       {# Example dropdown menu setup. Uncomment lines to view
         {% set dropdown = 
           [
@@ -44,5 +45,8 @@
               <input type="hidden" name="csrf_token" value="{{ csrf_token()|safe }}">
             </div>
         {% endif %}
+      </v-app>
+      </div><!-- /vuetify #app is needed -->
+      <script> new Vue({el: '#app', vuetify: new Vuetify(),}) </script>
     </body>
 </html>

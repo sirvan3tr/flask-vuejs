@@ -3,8 +3,8 @@
 {% import 'macros/check_password.html' as check %}
 
 {% block content %}
-    <div class="ui grid container">
-        <div class="eight wide computer sixteen wide mobile centered column">
+<v-main>
+    <v-container>
             <h2 class="ui dividing header">Create an account</h2>
 
             {% set flashes = {
@@ -14,6 +14,15 @@
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
+            <v-row justify="center">
+                <v-col
+                  cols="12"
+                  sm="10"
+                  md="8"
+                  lg="6"
+                >
+                  <v-card ref="form">
+                    <v-card-text>
             {{ f.begin_form(form, flashes) }}
 
             <div class="two fields">
@@ -33,12 +42,17 @@
             {{ f.form_message(flashes['info'], header='Information', class='info') }}
             {{ f.form_message(flashes['success'], header='Success!', class='success') }}
 
+        <v-card-actions>
             {% for field in form | selectattr('type', 'equalto', 'SubmitField') %}
                 {{ f.render_form_field(field) }}
             {% endfor %}
-
+        </v-card-actions>
             {{ f.end_form(form) }}
-        </div>
-    </div>
     {{ check.password_check('password', 0) }}
+</v-card-text>
+</v-card>
+</v-col>
+
+    </v-container>
+</v-main>
 {% endblock %}

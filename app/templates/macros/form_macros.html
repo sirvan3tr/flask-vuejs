@@ -43,7 +43,7 @@
         {% set enctype = '' %}
     {% endif %}
 
-    <form action="" method="{{ method }}" enctype="{{ enctype }}" class="ui form {{ extra_classes }}
+    <form action="" method="{{ method }}" enctype="{{ enctype }}" class="{{ extra_classes }}
         {% if form.errors or flashes['error'] %} error
         {% elif flashes['warning'] %} warning
         {% elif flashes['info'] %} info
@@ -109,7 +109,7 @@
     {% if field.type == 'Radio Field' %}
         {% set extra_classes = extra_classes + ' grouped fields' %}
     {% endif %}
-    <div class="field {% if field.errors %}error{% endif %} {{ extra_classes }}">
+    <div class="{% if field.errors %}error{% endif %} {{ extra_classes }}">
         {{ render_form_input(field) }}
         {% if field.errors %}
             <div class="ui red pointing label">
@@ -134,18 +134,25 @@
             </div>
         {% endfor %}
     {% elif field.type == 'SubmitField' %}
-        {{ field(class='ui button') }}
+        {{ field(class='v-btn') }}
     {% elif field.type == 'FormField' %}
         {{ render_form(field) }}
     {% elif field.type == 'CustomSelectField' %}
         {{ render_custom_select(field) }}
     {% else %}
-        {{ field.label }}
+        <v-text-field
+        {% if field.required == 'required' %}
+            required
+        {% endif %}
+        placeholder='{{ field.label.text }}'
+        outlined
+        dense
+        label='{{ field.label.text }}'
+        ></v-text-field>
         {% if field.description %}
             <div class="ui pointing below label">
                 {{ field.description }}
             </div>
         {% endif %}
-        {{ field(placeholder=field.label.text) }}
     {% endif %}
 {% endmacro %}
