@@ -1,14 +1,6 @@
-# flask-base
-[![Circle CI](https://circleci.com/gh/hack4impact/flask-base.svg?style=svg)](https://circleci.com/gh/hack4impact/flask-base) 
-[![Code Climate](https://codeclimate.com/github/hack4impact/flask-base/badges/gpa.svg)](https://codeclimate.com/github/hack4impact/flask-base/coverage)
-[![Issue Count](https://codeclimate.com/github/hack4impact/flask-base/badges/issue_count.svg)](https://codeclimate.com/github/hack4impact/flask-base) ![python3.x](https://img.shields.io/badge/python-3.x-brightgreen.svg)  ![python2.x](https://img.shields.io/badge/python-2.x-yellow.svg)
+# flask-vuejs
 
-![flask-base](readme_media/logo.png)
-
-A Flask application template with the boilerplate code already done for you.
-
-
-**Documentation available at [http://hack4impact.github.io/flask-base](http://hack4impact.github.io/flask-base).**
+Ported over from flask-base.
 
 ## What's included?
 
@@ -22,25 +14,6 @@ A Flask application template with the boilerplate code already done for you.
 * Redis Queue for handling asynchronous tasks
 * ZXCVBN password strength checker
 * CKEditor for editing pages
-
-## Demos
-
-Home Page:
-
-![home](readme_media/home.gif "home")
-
-Registering User:
-
-![registering](readme_media/register.gif "register")
-
-Admin Editing Page:
-
-![edit page](readme_media/editpage.gif "editpage")
-
-Admin Editing Users:
-
-![edit user](readme_media/edituser.gif "edituser")
-
 
 ## Setting up
 
@@ -223,11 +196,6 @@ It will deploy 5 docker images:
 
 Before you submit changes to flask-base, you may want to autoformat your code with `python manage.py format`.
 
-
-## Contributing
-
-Contributions are welcome! Please refer to our [Code of Conduct](./CONDUCT.md) for more information.
-
 ## Documentation Changes
 
 To make changes to the documentation refer to the [Mkdocs documentation](http://www.mkdocs.org/#installation) for setup.
@@ -236,8 +204,5 @@ To create a new documentation page, add a file to the `docs/` directory and edit
 
 When the new files are merged into `master` and pushed to github. Run `mkdocs gh-deploy` to update the online documentation.
 
-## Related
-https://medium.freecodecamp.com/how-we-got-a-2-year-old-repo-trending-on-github-in-just-48-hours-12151039d78b#.se9jwnfk5
-
 ## License
-[MIT License](LICENSE.md)
+[MIT License](LICENSE)
