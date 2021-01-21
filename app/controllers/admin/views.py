@@ -11,7 +11,7 @@ from flask_login import current_user, login_required
 from flask_rq import get_queue
 
 from app import db
-from app.admin.forms import (
+from app.controllers.admin.forms import (
     ChangeAccountTypeForm,
     ChangeUserEmailForm,
     InviteUserForm,

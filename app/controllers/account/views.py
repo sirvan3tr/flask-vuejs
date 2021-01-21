@@ -15,7 +15,7 @@ from flask_login import (
 from flask_rq import get_queue
 
 from app import db
-from app.account.forms import (
+from app.controllers.account.forms import (
     ChangeEmailForm,
     ChangePasswordForm,
     CreatePasswordForm,

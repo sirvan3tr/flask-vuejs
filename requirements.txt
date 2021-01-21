@@ -6,6 +6,8 @@ Brotli==1.0.9
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
+dnspython==2.1.0
+email-validator==1.1.2
 Faker==5.6.5
 Flask==1.1.2
 Flask-Assets==2.0
