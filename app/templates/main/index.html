@@ -4,9 +4,6 @@
 <v-main>
   <v-container>
       <h1>Hello {% if not (current_user.is_authenticated) %} world {% else %} {{ current_user.full_name() }} {% endif %},</h1>
-      
-      <p>Testing 1 2 3</p>
-
       <div id="counter">
         Counter: [[ counter ]]
       </div>
@@ -23,5 +20,5 @@
         </v-container>
 </v-main>
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script> new Vue({el: '#app', vuetify: new Vuetify(),}) </script>
+    <script> new Vue({el: '#app', vuetify: new Vuetify({}),}) </script>
 {% endblock %}
