@@ -141,9 +141,10 @@
         {{ render_custom_select(field) }}
     {% else %}
         <v-text-field
-        {% if field.required == 'required' %}
-            required
-        {% endif %}
+        tt='{{ field }}'
+        id='{{ field.id }}'
+        name= '{{ field.name }}'
+        type='{{ field.type }}'
         placeholder='{{ field.label.text }}'
         outlined
         dense

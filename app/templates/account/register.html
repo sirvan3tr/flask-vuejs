@@ -5,8 +5,21 @@
 {% block content %}
 <v-main>
     <v-container>
-            <h2 class="ui dividing header">Create an account</h2>
+        <v-row justify="center">
+            <v-col cols="12" sm="10" md="8" lg="4">
+              <v-card ref="form">
+                <v-list-item three-line>
+                    <v-list-item-content>
+                      <v-list-item-title class="headline mb-1">
+                        Registration
+                      </v-list-item-title>
+                      <v-list-item-subtitle>We care about security and privacy; we have you covered.</v-list-item-subtitle>
+                    </v-list-item-content>
+                </v-list-item>
 
+
+                <v-card-text>
+                    
             {% set flashes = {
                 'error':   get_flashed_messages(category_filter=['form-error']),
                 'warning': get_flashed_messages(category_filter=['form-check-email']),
@@ -14,15 +27,7 @@
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
-            <v-row justify="center">
-                <v-col
-                  cols="12"
-                  sm="10"
-                  md="8"
-                  lg="6"
-                >
-                  <v-card ref="form">
-                    <v-card-text>
+
             {{ f.begin_form(form, flashes) }}
 
             <div class="two fields">
@@ -49,10 +54,10 @@
         </v-card-actions>
             {{ f.end_form(form) }}
     {{ check.password_check('password', 0) }}
-</v-card-text>
+    </v-card-text>
 </v-card>
 </v-col>
-
-    </v-container>
+</v-row>
+</v-container>
 </v-main>
 {% endblock %}
