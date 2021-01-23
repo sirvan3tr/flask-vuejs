@@ -8,16 +8,14 @@
     ('account.change_password', 'Change password'),
     ('account.logout', 'Log out')
 ] %}
-
+#class="{% if request.endpoint == route %}active{% endif %}"
 {% macro navigation(items) %}
-    <div class="ui vertical fluid secondary menu">
         {% for route, name in items %}
             {% set href = url_for(route) %}
-            <a class="item {% if request.endpoint == route %}active{% endif %}" href="{{ href }}">
-                {{ name }}
-            </a>
+            <v-list-item
+            link={{ href }}
+            ><a href={{href}}>{{ name }}</a></v-list-item>
         {% endfor %}
-    </div>
 {% endmacro %}
 
 {% macro user_info(user) %}
@@ -29,25 +27,66 @@
 {% endmacro %}
 
 {% block content %}
-    <div class="ui stackable centered grid container">
-        <div class="twelve wide column">
-            <h2 class="ui header">
-                Account Settings
-                <div class="sub header">Manage your account settings and change your login information.</div>
-            </h2>
-        </div>
-        <div class="stretched divided very relaxed row">
-            <div class="four wide column">
-                {{ navigation(endpoints) }}
-            </div>
-            <div class="eight wide column">
-                {% if form %}
-                    {{ f.render_form(form, extra_classes='fluid') }}
-                {% else %}
-                    {{ user_info(user) }}
-                {% endif %}
-            </div>
-        </div>
-    </div>
+
+<v-main>
+    <v-container>
+        <h1>Account Settings</h1>
+        <p>Manage your account settings and change your login information.</p>
+        <v-row
+        class="mb-6"
+        no-gutters
+    >
+        <v-col
+        :md="3"
+        >
+        <v-card
+          class="mx-auto"
+          width="256"
+          tile
+        >
+          <v-navigation-drawer permanent>
+            <v-system-bar></v-system-bar>
+            <v-list>
+              <v-list-item>
+                <v-list-item-avatar>
+                  <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+                </v-list-item-avatar>
+              </v-list-item>
+      
+              <v-list-item link>
+                <v-list-item-content>
+                  <v-list-item-title class="title">
+                    {{ user.first_name }} {{ user.last_name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{ user.email }}</v-list-item-subtitle>
+                </v-list-item-content>
+      
+                <v-list-item-action>
+                  <v-icon>mdi-menu-down</v-icon>
+                </v-list-item-action>
+              </v-list-item>
+            </v-list>
+            <v-divider></v-divider>
+            <v-list
+              nav
+              dense
+            >
+            {{ navigation(endpoints) }}
+            </v-list>
+          </v-navigation-drawer>
+        </v-card>
+        </v-col>
+        <v-col :md="9">
+            {% if form %}
+                {{ f.render_form(form, extra_classes='fluid') }}
+            {% else %}
+                {{ user_info(user) }}
+            {% endif %}
+        </v-col>
+      </v-row>
+
+
+</v-container>
+</v-main>
     {{ check.password_check('new_password', 0) }}
 {% endblock %}
