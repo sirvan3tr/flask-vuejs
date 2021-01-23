@@ -1,33 +1,7 @@
 {% extends 'layouts/base.html' %}
 
-{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
-    <a class="column" href="{{ url_for(endpoint) }}">
-            <v-btn>
-                {% if icon is not none %}
-                    <v-icon left>{{ icon }}</v-icon>
-                {% endif %}
-                    {{ title }}
-            </v-btn>
-            {% if description is not none %}
-            <div>
-                {{ description }}
-            </div>
-        {% endif %}
-    </a>
-{% endmacro %}
-
 {% block content %}
     <v-main>
-            <h2>
-                Admin Dashboard
-            </h2>
-
-                {{ dashboard_option('Registered Users', 'admin.registered_users',
-                                    description='View and manage user accounts', icon='mdi-account') }}
-                {{ dashboard_option('Add New User', 'admin.new_user',
-                                    description='Create a new user account', icon='mdi-account-plus') }}
-                {{ dashboard_option('Invite New User', 'admin.invite_user',
-                                    description='Invites a new user to create their own account', icon='mdi-account-multiple-plus') }}
-
+        {% include 'admin/admin_nav.html' %}
     </v-main>
 {% endblock %}

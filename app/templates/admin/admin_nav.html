@@ -1,0 +1,38 @@
+{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
+<v-list-item link href='{{ url_for(endpoint) }}'>
+  {% if icon is not none %}
+  <v-list-item-icon>
+    <v-icon>{{ icon }}</v-icon>
+  </v-list-item-icon>
+  {% endif %}
+
+  <v-list-item-content>
+    <v-list-item-title>{{ title }}</v-list-item-title>
+    {% if description is not none %}
+      <v-list-item-subtitle>{{ description }}</v-list-item-subtitle>
+    {% endif %}
+  </v-list-item-content>
+</v-list-item>
+{% endmacro %}
+
+<template>
+  <v-card height="400" width="256" class="mx-auto">
+    <v-navigation-drawer permanent>
+    <v-list-item>
+      <v-list-item-content>
+      <v-list-item-title class="title">Admin Dashboard</v-list-item-title>
+      <v-list-item-subtitle>Manage the site here</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider></v-divider>
+    <v-list dense nav>
+    {{ dashboard_option('Registered Users', 'admin.registered_users',
+    description='View and manage user accounts', icon='mdi-account-details') }}
+      {{ dashboard_option('Add New User', 'admin.new_user',
+    description='Create a new user account', icon='mdi-account-plus') }}
+      {{ dashboard_option('Invite New User', 'admin.invite_user',
+    description='Invites a new user to create their own account', icon='mdi-account-multiple-plus') }}
+    </v-list>
+    </v-navigation-drawer>
+  </v-card>
+</template>
