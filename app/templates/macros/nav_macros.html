@@ -5,9 +5,7 @@
 {% macro render_menu_items(endpoints) %}
     {% for endpoint, name, icon in endpoints %}
         <v-btn text class="{% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
-            {% if icon %}
-                <i class="{{ icon }} icon"></i>
-            {% endif %}
+            <v-icon small left>{{icon}}</v-icon>
             {{ name | safe }}
         </v-btn>
     {% endfor %}
@@ -21,12 +19,12 @@
 
 {% macro header_items(current_user) %}
     {% set endpoints = [
-      ('main.index', config.APP_NAME, 'home'),
-      ('main.about', 'About', 'info')
+      ('main.index', config.APP_NAME, 'mdi-home-heart'),
+      ('main.about', 'About', 'mdi-information-variant')
     ]%}
     {% set user = [] %}
     {% if current_user.is_authenticated %}
-      {% set user = ([(current_user.role.index + '.index', current_user.role.name + ' Dashboard', 'user')]) %}
+      {% set user = ([(current_user.role.index + '.index', current_user.role.name + ' Dashboard', 'mdi-cog')]) %}
     {% endif %} 
     {{ render_menu_items( endpoints +  user ) }}
 {% endmacro %}
@@ -37,14 +35,14 @@
 {% macro account_items(current_user) %}
     {% if current_user.is_authenticated %}
       {% set endpoints = [
-        ('account.manage', 'Your Account', 'settings'),
-        ('account.logout', 'Log out', 'sign out')
+        ('account.manage', 'Your Account', 'mdi-account-cog'),
+        ('account.logout', 'Log out', 'mdi-lock')
       ] %}
       {{ render_menu_items(endpoints) }}
     {% else %}
       {% set endpoints = [
-        ('account.register', 'Register', 'list layout'),
-        ('account.login', 'Log In', 'sign in')
+        ('account.register', 'Register', 'mdi-account-plus'),
+        ('account.login', 'Log In', 'mdi-login')
       ] %}
       {{ render_menu_items(endpoints) }}
     {% endif %}
@@ -88,34 +86,14 @@
   <div>
     <v-app-bar dense>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
       <v-toolbar-title>{{ config.APP_NAME }}</v-toolbar-title>
-
       {{ header_items(current_user) }}
       {{ create_dropdown(dropdown) }}
       <v-spacer></v-spacer>
 
-      <v-btn icon>
-        {{ account_items(current_user) }}
-      </v-btn>
+      {{ account_items(current_user) }}
 
-      <v-btn icon>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
 
-      <v-menu left bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
-          </v-btn>
-        </template>
-
-        <v-list>
-          <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
     </v-app-bar>
   </div>
 </template>
