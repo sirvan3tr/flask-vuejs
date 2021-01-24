@@ -4,156 +4,162 @@
 
 {# Render a flask.ext.wtforms.Form object.
    Parameters:
-        form          – The form to output.
-        method        – <form> method attribute (default 'POST')
-        extra_classes – The classes to add to the <form>.
-        enctype       – <form> enctype attribute. If None, will automatically be set to
-                        multipart/form-data if a FileField is present in the form. #}
+    form          – The form to output.
+    method        – <form> method attribute (default 'POST')
+    extra_classes – The classes to add to the <form>.
+    enctype       – <form> enctype attribute. If None, will automatically be set to
+            multipart/form-data if a FileField is present in the form. #}
 {% macro render_form(form, method='POST', extra_classes='', enctype=None) %}
-    {% set flashes = {
-        'error':   get_flashed_messages(category_filter=['form-error']),
-        'warning': get_flashed_messages(category_filter=['form-check-email']),
-        'info':    get_flashed_messages(category_filter=['form-info']),
-        'success': get_flashed_messages(category_filter=['form-success'])
-    } %}
+  {% set flashes = {
+    'error':   get_flashed_messages(category_filter=['form-error']),
+    'warning': get_flashed_messages(category_filter=['form-check-email']),
+    'info':    get_flashed_messages(category_filter=['form-info']),
+    'success': get_flashed_messages(category_filter=['form-success'])
+  } %}
 
-    {{ begin_form(form, flashes, method=method, extra_classes=extra_classes, enctype=enctype) }}
-        {% for field in form if not (is_hidden_field(field) or field.type == 'SubmitField') %}
-            {{ render_form_field(field) }}
-        {% endfor %}
+  {{ begin_form(form, flashes, method=method, extra_classes=extra_classes, enctype=enctype) }}
+    {% for field in form if not (is_hidden_field(field) or field.type == 'SubmitField') %}
+      {{ render_form_field(field) }}
+    {% endfor %}
 
-        {{ form_message(flashes['error'], header='Something went wrong.', class='error') }}
-        {{ form_message(flashes['warning'], header='Check your email.', class='warning') }}
-        {{ form_message(flashes['info'], header='Information', class='info') }}
-        {{ form_message(flashes['success'], header='Success!', class='success') }}
+    {{ form_message(flashes['error'], header='Something went wrong.', class='error') }}
+    {{ form_message(flashes['warning'], header='Check your email.', class='warning') }}
+    {{ form_message(flashes['info'], header='Information', class='info') }}
+    {{ form_message(flashes['success'], header='Success!', class='success') }}
 
-        {% for field in form | selectattr('type', 'equalto', 'SubmitField') %}
-            {{ render_form_field(field) }}
-        {% endfor %}
+    {% for field in form | selectattr('type', 'equalto', 'SubmitField') %}
+      {{ render_form_field(field) }}
+    {% endfor %}
 
-    {{ end_form(form) }}
+  {{ end_form(form) }}
 {% endmacro %}
 
 {# Set up the form, including hidden fields and error states #}
 {% macro begin_form(form, flashes, method='POST', extra_classes='', enctype=None) %}
-    {# Set proper enctype #}
-    {% if enctype is none and (form | selectattr('type', 'equalto', 'FileField') | list | length > 0) %}
-        {% set enctype = 'multipart/form-data' %}
-    {% else %}
-        {% set enctype = '' %}
-    {% endif %}
+  {# Set proper enctype #}
+  {% if enctype is none and (form | selectattr('type', 'equalto', 'FileField') | list | length > 0) %}
+    {% set enctype = 'multipart/form-data' %}
+  {% else %}
+    {% set enctype = '' %}
+  {% endif %}
 
-    <form action="" method="{{ method }}" enctype="{{ enctype }}" class="{{ extra_classes }}
-        {% if form.errors or flashes['error'] %} error
-        {% elif flashes['warning'] %} warning
-        {% elif flashes['info'] %} info
-        {% elif flashes['success'] %} success
-        {% endif %}">
-    {{ form.hidden_tag() }}
+  <form action="" method="{{ method }}" enctype="{{ enctype }}" class="{{ extra_classes }}
+    {% if form.errors or flashes['error'] %} error
+    {% elif flashes['warning'] %} warning
+    {% elif flashes['info'] %} info
+    {% elif flashes['success'] %} success
+    {% endif %}">
+  {{ form.hidden_tag() }}
 {% endmacro %}
 
 {# Mirrors begin_form #}
 {% macro end_form(form) %}
-    </form>
+  </form>
 {% endmacro %}
 
 {# Render a message for the form #}
 {% macro form_message(messages, header=none, class='') %}
-    {% if messages %}
-        <div class="ui {{ class }} message">
-            {% if header is not none %}
-                <div class="header">{{ header }}</div>
-            {% endif %}
-            {% if messages %}
-                <ul class="list">
-                    {% for message in messages %}
-                        <li>{{ message | safe }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-    {% endif %}
+  {% if messages %}
+    <div class="ui {{ class }} message">
+      {% if header is not none %}
+        <div class="header">{{ header }}</div>
+      {% endif %}
+      {% if messages %}
+        <ul class="list">
+          {% for message in messages %}
+            <li>{{ message | safe }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  {% endif %}
 {% endmacro %}
 
 {# Render a field for the form #}
 {% macro render_custom_select(field) %}
-    {{ field.label }}
-    {% if field.description %}
-        <div class="ui pointing below label">
-            {{ field.description }}
-        </div>
-    {% endif %}
-    <div id="{{field.name}}" class="ui fluid {% if field.multiple %}multiple {% endif %}search selection dropdown">
-        {{ field() }}
-        <i class="dropdown icon"></i>
-        <div class="default text">{{field.label.text}}</div>
-        <div class="menu">
-            {% for choice in field.choices %}
-                <div class="item">{{choice}}</div>
-            {% endfor %}
-        </div>
+  {{ field.label }}
+  {% if field.description %}
+    <div class="ui pointing below label">
+      {{ field.description }}
     </div>
-    {% if field.allow_custom %}
-        <script>
-            $(document).ready(function() {
-                $('div#{{field.name}}').dropdown({
-                  allowAdditions: true
-                })
-            });
-        </script>
-    {% endif %}
+  {% endif %}
+  <div id="{{field.name}}" class="ui fluid {% if field.multiple %}multiple {% endif %}search selection dropdown">
+    {{ field() }}
+    <i class="dropdown icon"></i>
+    <div class="default text">{{field.label.text}}</div>
+    <div class="menu">
+      {% for choice in field.choices %}
+        <div class="item">{{choice}}</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% if field.allow_custom %}
+    <script>
+      $(document).ready(function() {
+        $('div#{{field.name}}').dropdown({
+          allowAdditions: true
+        })
+      });
+    </script>
+  {% endif %}
 {% endmacro %}
 
 {# Render a field for the form #}
 {% macro render_form_field(field, extra_classes='') %}
-    {% if field.type == 'Radio Field' %}
-        {% set extra_classes = extra_classes + ' grouped fields' %}
+  {% if field.type == 'Radio Field' %}
+    {% set extra_classes = extra_classes + ' grouped fields' %}
+  {% endif %}
+  <div class="{% if field.errors %}error{% endif %} {{ extra_classes }}">
+    {{ render_form_input(field) }}
+    {% if field.errors %}
+      <div class="ui red pointing label">
+        {{ field.errors[0] | safe }}
+      </div>
     {% endif %}
-    <div class="{% if field.errors %}error{% endif %} {{ extra_classes }}">
-        {{ render_form_input(field) }}
-        {% if field.errors %}
-            <div class="ui red pointing label">
-                {{ field.errors[0] | safe }}
-            </div>
-        {% endif %}
-    </div>
+  </div>
 {% endmacro %}
 
 {% macro render_form_input(field) %}
-    {% if field.widget.input_type == 'checkbox' %}
-        <div class="ui checkbox">
-            {{ field }}
-            {{ field.label }}
-        </div>
-    {% elif field.type == 'RadioField' %}
-        {{ field.label }}
-        {% for item in field %}
-            <div class="ui radio checkbox">
-                {{ item }}
-                {{ item.label }}
-            </div>
-        {% endfor %}
-    {% elif field.type == 'SubmitField' %}
-        {{ field(class='v-btn') }}
-    {% elif field.type == 'FormField' %}
-        {{ render_form(field) }}
-    {% elif field.type == 'CustomSelectField' %}
-        {{ render_custom_select(field) }}
-    {% else %}
-        <v-text-field
-        tt='{{ field }}'
-        id='{{ field.id }}'
-        name= '{{ field.name }}'
-        type='{{ field.type }}'
-        placeholder='{{ field.label.text }}'
-        outlined
-        dense
-        label='{{ field.label.text }}'
-        ></v-text-field>
-        {% if field.description %}
-            <div class="ui pointing below label">
-                {{ field.description }}
-            </div>
-        {% endif %}
+  {% if field.widget.input_type == 'checkbox' %}
+    <div class="ui checkbox">
+      {{ field }}
+      {{ field.label }}
+    </div>
+  {% elif field.type == 'RadioField' %}
+    {{ field.label }}
+    {% for item in field %}
+      <div class="ui radio checkbox">
+        {{ item }}
+        {{ item.label }}
+      </div>
+    {% endfor %}
+  {% elif field.type == 'SubmitField' %}
+    <v-btn
+    type="submit"
+    name="submit"
+    class="ma-2"
+    depressed
+    color="primary"
+  >
+    Submit
+  </v-btn>
+  {% elif field.type == 'FormField' %}
+    {{ render_form(field) }}
+  {% elif field.type == 'CustomSelectField' %}
+    {{ render_custom_select(field) }}
+  {% else %}
+    <v-text-field
+    tt='{{ field }}'
+    id='{{ field.id }}'
+    name= '{{ field.name }}'
+    type='{{ field.type }}'
+    placeholder='{{ field.label.text }}'
+    outlined
+    dense
+    label='{{ field.label.text }}'
+    ></v-text-field>
+    {% if field.description %}
+      :{{ field.description }}
     {% endif %}
+  {% endif %}
 {% endmacro %}

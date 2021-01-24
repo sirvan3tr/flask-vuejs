@@ -2,7 +2,17 @@
 
 {% block content %}
 <v-main><v-container>
+  <v-row justify="left">
+    <v-col
+      cols="12"
+      sm="7"
+    >
   <h1>Hello {% if not (current_user.is_authenticated) %} world {% else %} {{ current_user.full_name() }} {% endif %},</h1>
-  This is a flask template that utilises <a href="https://vuejs.org/" target="_blank">Vue.js</a> and <a href="https://vuetifyjs.com/en/" target="_blank">Vuetify</a> for quicker development.
+  <p>This is a flask template that utilises <a href="https://vuejs.org/" target="_blank">Vue.js</a> and <a href="https://vuetifyjs.com/en/" target="_blank">Vuetify</a> for quicker development.</p>
+
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi semper luctus efficitur. Nam nec justo et nisi semper tempus at sed nisl. Curabitur augue turpis, finibus a commodo vel, facilisis vel ligula. Etiam commodo, lacus in rhoncus eleifend, enim urna elementum augue, non fringilla erat metus eget tellus. Phasellus finibus arcu eget lectus scelerisque iaculis. Nullam ante lacus, fermentum quis felis quis, sollicitudin scelerisque sapien. Sed sed semper tellus. Fusce massa quam, laoreet eu nisi a, suscipit vestibulum diam.</p>
+  
+  <p>Fusce eget venenatis turpis. Nullam tincidunt efficitur convallis. Aliquam molestie dignissim lacus sit amet dapibus. Duis molestie egestas tempus. Sed a augue libero. Duis malesuada, elit sed finibus blandit, risus risus ultrices augue, nec sodales arcu elit ac diam. In hac habitasse platea dictumst. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget fringilla sapien. Suspendisse rhoncus diam vel porttitor tristique. Quisque faucibus risus risus, congue condimentum quam consequat at. Nullam iaculis rhoncus augue sit amet pharetra. Etiam diam sem, tempor commodo sem sit amet, consequat interdum leo. Fusce sit amet nulla quis lectus commodo ultrices. Integer rutrum aliquet lectus vitae posuere.</p>
+  </v-col></v-row>
 </v-container></v-main>
 {% endblock %}

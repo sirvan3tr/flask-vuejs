@@ -82,21 +82,15 @@
 
 {% macro desktop_nav(current_user, dropdown=None) %}
 
-<template>
-  <div>
-    <v-app-bar dense>
+    <v-app-bar elevation="1" dense>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>{{ config.APP_NAME }}</v-toolbar-title>
       {{ header_items(current_user) }}
       {{ create_dropdown(dropdown) }}
       <v-spacer></v-spacer>
-
       {{ account_items(current_user) }}
-
-
     </v-app-bar>
-  </div>
-</template>
+
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}

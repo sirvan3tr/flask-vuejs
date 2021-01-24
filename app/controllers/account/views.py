@@ -150,7 +150,7 @@ def change_password():
             return redirect(url_for('main.index'))
         else:
             flash('Original password is invalid.', 'form-error')
-    return render_template('account/manage.html', form=form)
+    return render_template('account/manage.html', user=current_user, form=form)
 
 
 @account.route('/manage/change-email', methods=['GET', 'POST'])
@@ -178,7 +178,7 @@ def change_email_request():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid email or password.', 'form-error')
-    return render_template('account/manage.html', form=form)
+    return render_template('account/manage.html', user=current_user, form=form)
 
 
 @account.route('/manage/change-email/<token>', methods=['GET', 'POST'])
