@@ -5,7 +5,6 @@
     <div class="ui grid container">
         <div class="eight wide computer sixteen wide mobile centered column">
             <h2 class="ui dividing header">Log in</h2>
-
             {% set flashes = {
                 'error':   get_flashed_messages(category_filter=['form-error']),
                 'warning': get_flashed_messages(category_filter=['form-check-email']),
